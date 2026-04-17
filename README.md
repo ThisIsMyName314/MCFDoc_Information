@@ -3,13 +3,11 @@
 MCFDoc is a more basic version of JavaDoc which is designed to help
 document datapacks thoroughly.
 
-MCFDoc is short for MCFunction Documentation
+MCFDoc is short for MCFunction Documentation (and named to be similar to JavaDoc)
 
 ### Making a function MCFDoc compatible
 
-To create an MCFDoc valid function add a comment at the top of the .mcfunction file.
-
-> This is not essential, and the function will be present in the MCFDoc with or without a comment at the start, but MCFDoc is for documentation and so this is a guide assuming that you want to make a well documented function.
+To create an MCFDoc valid function add a comment at the top of the .mcfunction file, above all of the commands. 
 
 For example, in this file called give_example.mcfunction:
 
@@ -21,7 +19,7 @@ $give @s $(item) $(count)
 
 This will result in a function entry in the MCFDoc with the description 'Gives the executor the specified item'
 
-<br>
+
 ##### Parameters
 
 If you wanted to note to the user that the item and count arguments are required, you could add 2 parameter tags, as such:
@@ -42,7 +40,7 @@ This would result in the function being listed as:
 
  With the two parameters listed with descriptions below the function description.
 
- > There are 5 valid types: Int, Float, String, Bool and Other. They are case sensitive and the MCFDoc will not generate if you give an invalid one.
+ There are 5 valid types: `Int`, `Float`, `String`, `Bool` and `Other`. They are case sensitive and the MCFDoc will not generate if you give an invalid one.
 
  ##### Other tags
 
@@ -53,7 +51,7 @@ This would result in the function being listed as:
  The list is:
 `author`, `return`, `see`, `version`, `deprecated`, `since` and `example`
 
-> The description can run over multiple lines of comments, but it must be present, otherwise the MCFDoc won't be created.
+The description message can run over multiple lines.
 
 MCFDoc is very simple as it's aimed to be easily integratable to functions.
 
@@ -71,7 +69,30 @@ When compiling, there are 3 options for HTML sanitation:
 
 - `ALL` prevents all sanitation from ocurring
 
-> If you use MCFDoc on an untrusted datapack and turn off sanitation with the `html=ALL` flag, there is a possibility that malicious JavaScript code could be executed when you open the generated page in your browser, and so it is only recommended to do so if you are the creator. 
+> By setting html to ALL, you can add JavaScript to comments, which will then be kept in the resulting HTML file. This does mean that it is possible to smuggle malicious code in comments, and so you should only use MCFDoc on your own datapacks. 
 
-More tags, options and 'safe' HTML tags may be added in the future, however, with these, most of the basic formatting can be done.
+### Creating an MCFDoc
+
+To generate an MCFDoc you use the `/mcfdoc generate` command from the chat
+
+There are 2 essential flags that have to be used:
+
+`dir` which specifies the absolute path to the datapack, for example
+/home/user/Documents/datapack
+
+`out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html
+
+`html` is optional and defaults to SAFE
+
+`overwrite` enables you to allow overwriting when creating the output file and defaults to false
+
+`author` is optional and lets you specify the author name to include at the top of the generated file
+
+`description` lets you specify a description for the datapack
+
+An example command would be:
+
+`/mcfodc generate dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
+
+You will be notified in chat if there are errors
 
