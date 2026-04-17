@@ -3,13 +3,13 @@
 MCFDoc is a more basic version of JavaDoc which is designed to help
 document datapacks thoroughly.
 
-MCFDoc is short for MCFunction Documenter
+MCFDoc is short for MCFunction Documentation
 
 ### Making a function MCFDoc compatible
 
 To create an MCFDoc valid function add a comment at the top of the .mcfunction file.
 
-> This is not essential, and the function will be present in the MCFDoc with or without a comment at the start, but MCFDoc is for documentation and so this is a guide to make a well documented function.
+> This is not essential, and the function will be present in the MCFDoc with or without a comment at the start, but MCFDoc is for documentation and so this is a guide assuming that you want to make a well documented function.
 
 For example, in this file called give_example.mcfunction:
 
@@ -22,10 +22,9 @@ $give @s $(item) $(count)
 This will result in a function entry in the MCFDoc with the description 'Gives the executor the specified item'
 
 <br>
+##### Parameters
 
 If you wanted to note to the user that the item and count arguments are required, you could add 2 parameter tags, as such:
-
-##### Parameters
 
 > The general format for a parameter tag is: ```@param <name>: <type> <description>```
 
@@ -54,7 +53,7 @@ This would result in the function being listed as:
  The list is:
 `author`, `return`, `see`, `version`, `deprecated`, `since` and `example`
 
-> The description can run over multiplel ines of comments, but it must be present, otherwise the MCFDoc won't be created.
+> The description can run over multiple lines of comments, but it must be present, otherwise the MCFDoc won't be created.
 
 MCFDoc is very simple as it's aimed to be easily integratable to functions.
 
