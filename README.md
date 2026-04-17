@@ -84,11 +84,11 @@ There are 2 essential flags that have to be used:
 
 `html` is optional and defaults to SAFE
 
-`overwrite` enables you to allow overwriting when creating the output file and defaults to false
+`overwrite` is optional and enables you to allow overwriting when creating the output file and defaults to false
 
 `author` is optional and lets you specify the author name to include at the top of the generated file
 
-`description` lets you specify a description for the datapack
+`description` is optional and lets you specify a description for the datapack
 
 An example command would be:
 
