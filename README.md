@@ -90,6 +90,8 @@ There are 2 essential flags that have to be used:
 
 `description` is optional and lets you specify a description for the datapack
 
+`legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder
+
 An example command would be:
 
 `/mcfodc generate dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
