@@ -78,9 +78,9 @@ To generate an MCFDoc you use the `/mcfdoc generate` command from the chat
 There are 2 essential flags that have to be used:
 
 `dir` which specifies the absolute path to the datapack, for example
-/home/user/Documents/datapack
+/home/user/Documents/datapack on Linux
 
-`out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html
+`out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html on Linux
 
 `html` is optional and defaults to SAFE
 
@@ -90,11 +90,32 @@ There are 2 essential flags that have to be used:
 
 `description` is optional and lets you specify a description for the datapack
 
-`legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder
+`legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21))
 
-An example command would be:
+### Examples
 
-`/mcfodc generate dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
+Linux:
+
+`/mcfdoc generate dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
+
+MacOS:
+
+`/mcfdoc generate dir=/Users/user/Documents/datapack out=/Users/user/Documents/output.html`
+
+Windows:
+
+`/mcfdoc generate dir=C:\Users\User\Documents\datapack out=C:\Users\User\Documents\output.html`
+
+### Errors
 
 You will be notified in chat if there are errors
+
+There is a possibility that you may try and access a file that the process running Minecraft does not have access to. If using Prism Launcher on Linux, installed as a Flatpak, Minecraft is sandboxed and so you have very limited file access. 
+
+If this is the case, you can grant full filesystem access with the command (from the terminal)<br>
+`sudo flatpak override org.prismlauncher.PrismLauncher --filesystem=host`<br>
+
+You must then restart Prism Launcher (and Minecraft)
+
+
 
