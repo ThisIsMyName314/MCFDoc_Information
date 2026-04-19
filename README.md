@@ -42,6 +42,8 @@ This would result in the function being listed as:
 
  There are 5 valid types: `Int`, `Float`, `String`, `Bool` and `Other`. They are case sensitive and the MCFDoc will not generate if you give an invalid one.
 
+ Note that the colon after the name and before the type is required.
+
  ##### Other tags
 
  There are a selection of other tags, though none are fancy like the parameter tag. 
@@ -91,6 +93,8 @@ There are 2 essential flags that have to be used:
 `description` is optional and lets you specify a description for the datapack
 
 `legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21))
+
+If you require spaces in the flag value, you can enclose it in double quotes
 
 ### Examples
 
