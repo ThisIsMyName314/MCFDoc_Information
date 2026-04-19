@@ -110,6 +110,8 @@ Windows:
 
 `/mcfdoc generate dir=C:\Users\User\Documents\datapack out=C:\Users\User\Documents\output.html`
 
+Attached in this repoitory is an example datapack and the generated MCFDoc for it.
+
 ### Errors
 
 You will be notified in chat if there are errors
