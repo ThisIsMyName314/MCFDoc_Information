@@ -75,7 +75,9 @@ When compiling, there are 3 options for HTML sanitation:
 
 ### Creating an MCFDoc
 
-To generate an MCFDoc you use the `/mcfdoc generate` command from the chat
+To generate an MCFDoc you use the `/mcfdoc generate` command from the chat if using the mod.
+
+If you are using the standalone Jar, use `java -jar MCFDoc.jar <flags>` instead.
 
 There are 2 essential flags that have to be used:
 
