@@ -94,7 +94,7 @@ There are 2 essential flags that have to be used:
 
 `description` is optional and lets you specify a description for the datapack
 
-`legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21))
+`legacy` is an optional boolean flag, when set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a))
 
 If you require spaces in the flag value, you can enclose it in double quotes
 
