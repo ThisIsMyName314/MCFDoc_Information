@@ -194,6 +194,6 @@ If this is the case, you can grant full filesystem access with the command (from
 `sudo flatpak override org.prismlauncher.PrismLauncher --filesystem=host`<br>
 
 You must then restart Prism Launcher (and Minecraft)
-
+ 
 
 
