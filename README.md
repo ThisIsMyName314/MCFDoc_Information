@@ -38,7 +38,7 @@ $give @s $(item) $(count)
 
 This would result in the function being listed as:
 
- give_example(item: <span style="color:#EE1111">String</span>, count: <span style="color:#EE1111">Int</span>)
+ <code>give_example(item: <span style="color:#EE1111">String</span>, count: <span style="color:#EE1111">Int</span>)</code>
 
  With the two parameters listed with descriptions below the function description.
 
@@ -97,6 +97,14 @@ Custom types will also appear at the top of the generated MCFDoc page with their
 
 The description message can run over multiple lines.
 
+##### Deprecated
+
+The `@deprecated` tag is intended to indicate whether a function is outdated or going to be removed. 
+
+Functions with marked with this tag will have this noted in red next to their name in the MCFDoc, for example:
+
+<code>example:helper/broadcast <font color="#BB1111">(Deprecated)</font></code>
+
 ##### Custom Tags
 
 By default, using an undefined tag will throw an error, but if you use the flag `undeftags=<true|false>` you are able to enable them.
@@ -106,6 +114,8 @@ They follow the same syntax:
 ~~~
 # @customtag Hello world
 ~~~
+
+If the name of the tag does not begin with a capital letter, the first letter will be capitalised when printed in the MCFDoc.
 
 ### HTML usage in MCFDoc comments
 
@@ -156,11 +166,15 @@ And 6 optional:
 
 4. `description` lets you specify a description for the datapack
 
-5. `legacy` is a boolean flag. When set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a))
+5. `version` lets you specify the version of the datapack
 
-6. `undeftags` is also a boolean flag, letting you specify whether custom tags are allowed. It defaults to false.
+6. `legacy` is a boolean flag. When set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a))
 
-If you require spaces in the flag value, you can enclose it in double quotes
+7. `undeftags` is also a boolean flag, letting you specify whether custom tags are allowed. It defaults to false.
+
+8. `prefixtypes` is a boolean flag, it defaults to false. When set to true, the functions in the MCFDoc will have the parameter types written before the name, like in C style languages.
+
+If you require spaces in the flag value, you can enclose it in double quotes. Quotes are trimmed if present and so if quotes are used inside the value they do not need to be escaped.
 
 ### Examples
 
