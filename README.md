@@ -123,7 +123,7 @@ As the content you put in the names and descriptions inside the MCFDoc comments 
 
 When compiling, there are 3 options for HTML sanitation:
 
-> This defaults to `SAFE`, and can be changed with the flag `html=<NONE|SAFE|ALL>`
+> Note: This defaults to `SAFE`, and can be changed with the flag `html=<NONE|SAFE|ALL>`
 
 - `NONE`: This converts all HTML sensitive characters into their text form, preventing any use of HTML in comments
 
@@ -133,14 +133,13 @@ When compiling, there are 3 options for HTML sanitation:
 
 NONE is not recommended as all linebreaks will appear in text form as \<br\>. 
 
-> By setting html to ALL, you can add JavaScript to comments, which will then be kept in the resulting HTML file. This does mean that it is possible to smuggle malicious code in comments, and so you should only use MCFDoc on your own datapacks. 
+> Note: By setting html to ALL, you can add JavaScript to comments, which will then be kept in the resulting HTML file. This does mean that it is possible to smuggle malicious code in comments, and so you should only use MCFDoc on your own datapacks. 
 
 An example use of this would be to make a popup
 
 ~~~
 # Called when the world is either /reloaded or the world first loads
 # <script> alert("This datapack is by ThisIsNotMyName314"); </script>
-
 ~~~
 
 ### Generating the MCFDoc
