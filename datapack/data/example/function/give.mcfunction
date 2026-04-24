@@ -5,4 +5,4 @@
 # @param name: String the custom name for the item
 #
 
-$give @s $(id)[custom_name:{text:"$(name)"}] $(count)
+$give @s $(id)[custom_name={text: "$(name)", italic: false}] $(count)
