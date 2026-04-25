@@ -175,6 +175,8 @@ And 6 optional:
 
 If you require spaces in the flag value, you can enclose it in double quotes. Quotes are trimmed if present and so if quotes are used inside the value they do not need to be escaped.
 
+> Note: By running the Jar with no arguments, or with a `help` argument, it will output a list with all possible flags.
+
 ### Examples
 
 Linux:
@@ -195,18 +197,22 @@ Attached in this repository is an example datapack and the generated MCFDoc for 
 
 ### Errors
 
-You will be notified if there are any errors.
+You will be notified if there are any errors, with a message indicating the problem.
 
-Parser errors have a `[<function path>]` suffix to indicate which function caused the error
+Parser errors have a `[<function path>]` suffix to indicate which function caused the error.
 
 #### Errors in the mod:
 
-There is a possibility that you may try and access a file that the process running Minecraft does not have access to. If using Prism Launcher on Linux, installed as a Flatpak, Minecraft is sandboxed and so you have very limited file access. 
+There is a possibility that you may try and access a file that the process does not have access to. 
+
+If using Prism Launcher on Linux, installed as a Flatpak, Minecraft is sandboxed and so, by default, you have very limited file access. 
 
 If this is the case, you can grant full filesystem access with the command (from the terminal)<br>
 `sudo flatpak override org.prismlauncher.PrismLauncher --filesystem=host`<br>
 
-You must then restart Prism Launcher (and Minecraft)
+You must then restart Prism Launcher (and Minecraft).
+
+If the file is still not found, use the standalone MCFDoc Jar.
  
 
 
