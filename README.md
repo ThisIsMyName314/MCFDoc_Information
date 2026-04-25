@@ -7,6 +7,8 @@ The name is short for MCFunction Documentation \(and named to be similar to Java
 
 Overall it is very simple \(nothing close to JavaDoc or similar documentation generators\) as it's aimed to be easily integratable into functions or datapacks.  The main thing this was made for is to enable you to easily list all functions in one place, and visualise the macros you need to pass for each one.
 
+It should work on all OS's, however I have only tested it on Linux.
+
 ### Making a function MCFDoc compatible
 
 To create an MCFDoc-documented function add a comment at the top of the .mcfunction file, above all of the commands. 
