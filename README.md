@@ -95,7 +95,7 @@ Custom types will also appear at the top of the generated MCFDoc page with their
  > The format for all other tags is `@<tag name> <description>`
  
  The list is:
-`author`, `return`, `see`, `version`, `deprecated`, `since` and `example`
+`author`, `return`, `see`, `version`, `deprecated`, `since`, `example` and `hidden`
 
 The description message can run over multiple lines.
 
@@ -106,6 +106,18 @@ The `@deprecated` tag is intended to indicate whether a function is outdated or 
 Functions with marked with this tag will have this noted in red next to their name in the MCFDoc, for example:
 
 <code>example:helper/broadcast <font color="#BB1111">(Deprecated)</font></code>
+
+##### Hidden
+
+The `@hidden` tag allows you to prevent a function from appearing in the MCFDoc.
+
+There is no message for this tag, unlike the others.
+
+If, however, the `showhidden` flag is set to true, it will appear, as such:
+
+<code>example:test/hidden <font color="#1111BB">(Hidden)</font></code>
+
+It is indended for functions which are irrelevant to the user, such as internals in a library.
 
 ##### Custom Tags
 
@@ -174,6 +186,8 @@ And 6 optional:
 7. `undeftags` is also a boolean flag, letting you specify whether custom tags are allowed. It defaults to false.
 
 8. `prefixtypes` is a boolean flag, it defaults to false. When set to true, the functions in the MCFDoc will have the parameter types written before the name, like in C style languages.
+
+9. `showhidden` is also a boolean flag, defaulting to false. When true, hidden functions will be visible in the MCFDoc.
 
 If you require spaces in the flag value, you can enclose it in double quotes. Quotes are trimmed if present and so if quotes are used inside the value they do not need to be escaped.
 
