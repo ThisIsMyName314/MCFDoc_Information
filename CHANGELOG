@@ -3,3 +3,10 @@
 25th April 26
 
 Initial version
+
+#### v1.1.0
+
+29th April 26
+
+New `@hidden` tag<br>
+New `showhidden` flag
