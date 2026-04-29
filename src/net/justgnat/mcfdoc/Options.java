@@ -14,6 +14,7 @@ public class Options {
     public boolean legacyNames;
     public boolean undefinedTags;
     public boolean prefixTypesInOutput;
+    public boolean showHidden;
 
     public Options() {
         datapackPath = null;
@@ -26,6 +27,7 @@ public class Options {
         legacyNames = false;
         undefinedTags = false;
         prefixTypesInOutput = false;
+        showHidden = false;
     }
 
     /**
@@ -53,6 +55,9 @@ public class Options {
             case "prefixtypes": prefixTypesInOutput = value.equals("true");
                 break;
             case "version": version = value;
+                break;
+            case "showhidden":
+                showHidden = value.equals("true");
                 break;
             default: throw new RuntimeException("Unknown flag '" + key + "'");
         }

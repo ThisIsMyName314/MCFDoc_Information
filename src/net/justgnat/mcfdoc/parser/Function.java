@@ -8,7 +8,8 @@ public record Function (
         String description,
         List<Parameter> parameters,
         TagGroup tags,
-        boolean isDeprecated) {
+        boolean isDeprecated,
+        boolean isHidden) {
 
     @Override
     public String toString() {
@@ -21,16 +22,18 @@ public record Function (
         public List<Parameter> parameters;
         public TagGroup tags;
         public boolean deprecated;
+        public boolean hidden;
 
         public Builder() {
             parameters = new LinkedList<>();
             tags = new TagGroup();
             description = new StringBuilder();
             deprecated = false;
+            hidden = false;
         }
 
         public Function build() {
-            return new Function(name, description.toString(), parameters, tags, deprecated);
+            return new Function(name, description.toString(), parameters, tags, deprecated, hidden);
         }
     }
 

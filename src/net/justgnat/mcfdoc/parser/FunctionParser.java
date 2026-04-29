@@ -124,6 +124,9 @@ public class FunctionParser {
             case "executor":
                 builder.tags.add(new Tag.Executor(getTagBody()));
                 break;
+            case "hidden":
+                builder.hidden = true;
+                break;
             default: {
                 parseUndefinedTag(tag.literal);
             }

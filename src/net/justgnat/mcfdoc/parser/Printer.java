@@ -92,7 +92,9 @@ public class Printer {
 
         for (FunctionGroup group : datapack.groups()) {
             for (Function f : group.functions()) {
-                body.append(generateFunctionBodyHtml(f));
+                if (!f.isHidden() || options.showHidden) {
+                    body.append(generateFunctionBodyHtml(f));
+                }
             }
         }
         return body.toString();
@@ -126,6 +128,10 @@ public class Printer {
     private String div(String clazz, String content) {
         return "<div class=\"" + clazz + "\">" +
                 content + "</div>";
+    }
+
+    private String fontColour(String colour, String content) {
+        return "<font color=\"#" + colour + "\">" + content + "</font>";
     }
 
     private String p(String content) {
@@ -176,8 +182,11 @@ public class Printer {
         // Probably not as valid mcfunctions can not contain <s or >s.
         // However, names are not checked to be valid by MCFDoc, so I do currently.
         // Could add a feature to note invalid function names?
-        String name = function.isDeprecated() ? sanitise(function.name()) + "<font color=\"#BB1111\"> (Deprecated)</font>" :
-                sanitise(function.name());
+        String name = sanitise(function.name());
+        if (function.isDeprecated())
+            name += fontColour("BB1111", " (Deprecated) ");
+        if (function.isHidden())
+            name += fontColour("1111BB", " (Hidden)");
         return h4(name);
     }
 
