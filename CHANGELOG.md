@@ -16,3 +16,7 @@ New `showhidden` flag
 30th April 26
 
 Functions with invalid names are now skipped
+
+1st May 26
+
+Number of modules is now stated after the Function Summary title
