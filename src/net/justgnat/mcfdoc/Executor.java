@@ -2,7 +2,7 @@ package net.justgnat.mcfdoc;
 
 import net.justgnat.mcfdoc.parser.Datapack;
 import net.justgnat.mcfdoc.parser.DatapackParser;
-import net.justgnat.mcfdoc.parser.Printer;
+import net.justgnat.mcfdoc.printer.DatapackPrinter;
 import net.justgnat.mcfdoc.parser.TypeManager;
 
 public class Executor {
@@ -29,7 +29,7 @@ public class Executor {
         if (options != null) {
             try {
                 Datapack datapack = DatapackParser.parseDatapack(options, typeManager);
-                Printer.printDatapack(datapack, options, typeManager);
+                DatapackPrinter.printDatapack(datapack, options, typeManager);
             } catch (RuntimeException e) {
                 Logger.write(e.getMessage());
             }

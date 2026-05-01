@@ -126,7 +126,14 @@ public class DatapackParser {
         if (!isFunction(file))
             return;
 
-        String name = namespace + getFunctionName(file);
+        String functionName = getFunctionName(file);
+        if (!isValidName(functionName)) {
+            Logger.write("Skipping function with invalid name '" + functionName + "'");
+            return;
+        }
+
+        functionBuilder.namespace = namespace.substring(0, namespace.length() - 1);
+        String name = namespace + functionName;
         FunctionParser parser = new FunctionParser(name, FileUtil.read(file), options.undefinedTags, typeManager);
 
         try {
@@ -145,6 +152,16 @@ public class DatapackParser {
 
     private boolean isFunction(File file) {
         return file.getName().endsWith(EXTENSION);
+    }
+
+    private boolean isValidName(String name) {
+        for (int i = 0; i < name.length(); i++) {
+            char chr = name.charAt(i);
+            if ((chr >= 'a' && chr <= 'z') || (chr >= 'A' && chr <= 'Z') || (chr >= '0' && chr <= '9') || chr == '_')
+                continue;
+            return false;
+        }
+        return true;
     }
 
 }
