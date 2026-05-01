@@ -96,7 +96,7 @@ public class DatapackPrinter {
         StringBuilder body = new StringBuilder();
 
         for (FunctionGroup group : datapack.groups()) {
-            body.append(h3("Module " + group.namespace()));
+            // body.append(h3("Module " + group.namespace()));
             for (Function f : group.functions()) {
                 if (!f.isHidden() || options.showHidden) {
                     body.append(generateFunctionBodyHtml(f));
