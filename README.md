@@ -209,7 +209,7 @@ Windows:
 
 For the standalone Jar, replace `/mcfdoc generate` with `java -jar MCFDoc.jar` and run from the command line.
 
-Attached in this repository is an example datapack and the generated MCFDoc for it.
+Attached in this repository is an example datapack (datapack) and the generated MCFDoc (output.html) for it.
 
 ### Errors
 
