@@ -165,9 +165,11 @@ If you are using the standalone Jar, use `java -jar MCFDoc.jar <flags>` instead.
 There are 2 essential flags that have to be used:
 
 1. `dir` which specifies the absolute path to the datapack, for example
-/home/user/Documents/datapack on Linux
+/home/user/Documents/datapack on Linux.
 
-2. `out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html on Linux
+2. `out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html on Linux.
+
+ To reference relative to your current working directory you can use the  `./name` on linux or maxOS or `.\name` syntax on windows.
 
 And 6 optional:
 
