@@ -149,7 +149,7 @@ NONE is not recommended as all linebreaks will appear in text form as \<br\>.
 
 > Note: By setting html to ALL, you can add JavaScript to comments, which will then be kept in the resulting HTML file. This does mean that it is possible to smuggle malicious code in comments, and so you should only use MCFDoc on your own datapacks. 
 
-An example use of this would be to make a popup
+An example use of this would be to make a popup, with html set to ALL
 
 ~~~
 # Called when the world is either /reloaded or the world first loads
