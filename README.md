@@ -1,62 +1,121 @@
-## MCFDoc_Information
+# MCFDoc_Information
 
-MCFDoc is a more basic version of JavaDoc which is designed to help
-document datapacks thoroughly.
+MCFD is a simple documentation generator for Minecraft datapacks.
 
-The name is short for MCFunction Documentation \(and named to be similar to JavaDoc\)
+It aims to be
 
-Overall it is very simple \(nothing close to JavaDoc or similar documentation generators\) as it's aimed to be easily integratable into functions or datapacks.  The main thing this was made for is to enable you to easily list all functions in one place, and visualise the macros you need to pass for each one.
+1. Easily integratable
+2. useful even on commentless datapacks
+3. customisable
 
-It should work on all OS's, however I have only tested it on Linux.
+ - [How to use](#how-to-use)
+ - [Annotations](#annotations)
+    - [Parameters](#param)
+    - [Return](#return)
+    - [Hidden](#hidden)
+    - [Deprecated](#deprecated)
+    - [See](#see)
+    - [Custom Annotations](#custom-annotations)
+ - [Parameter Types](#parameter-types)
+    - [Custom Types](#custom-types)
+ - [Using HTML](#using-html)
+    - [All](#all)
+    - [Safe](#safe)
+    - [None](#none)
+  - [Making the Document](#making-the-document)
+     - [Required Flags](#required-flags)
+     - [Optional Flags](#optional-flags)
+     - [Errors](#errors)
+  - [Downloads](#downloads)  
 
-### Making a function MCFDoc compatible
+## How to use
 
-To create an MCFDoc-documented function add a comment at the top of the .mcfunction file, above all of the commands. 
+By default, all datapacks with a function directory are valid.
 
-For example, in this file called give_example.mcfunction:
+To add a description to a function file, add a standard comment at the top:
 
+~~~mcfunction
+# Broadcasts a chat message
+
+$tellraw @a "[Broadcast] $(message)"
 ~~~
-# Gives the executor the specified item
 
-$give @s $(item) $(count)
-~~~
+## Annotations
 
-This will result in a function entry in the MCFDoc with the description 'Gives the executor the specified item'
+As is fairly common for documentation generators, annotations (words prefixed with the @ symbol) are used to add special information.
 
+MCFD provides a reasonable selection of annotations, which can all be seen in detail in [Annotations.md](./ANNOTATIONS.md). The key ones are as follows:
 
-#### Parameters
+### <font style="font-family: 'Courier New', monospace;">@param</font>
 
-If you wanted to note to the user that the item and count arguments are required, you could add 2 parameter tags, as such:
+The parameter annotation declares that a macro argument is required. It must be followed by a name and a type.
 
-> The general format for a parameter tag is: ```@param <name>: <type> <description>```
+```mcfunction
+# Logs a message with a specified colour
+#
+# @param col: String
+```
 
-~~~
-# Gives the executor the specified item
-# @param item: String the id of the item to give
-# @param count: Int the number of items to give
+The colon after the name is optional. A message can also be provided after the type.
 
-$give @s $(item) $(count)
-~~~
-
-This would result in the function being listed as:
+In the resulting MCFDoc the parameters will be listed, and the function name will be displayed with them, for example:
 
  <code>give_example(item: <span style="color:#EE1111">String</span>, count: <span style="color:#EE1111">Int</span>)</code>
 
- With the two parameters listed with descriptions below the function description.
+ See [Parameter Types](#parameter-types) about how types work.
 
-#### Types
+### <font style="font-family: 'Courier New', monospace;">@return</font>
 
-By default there are 8 types, `Int`, `String`, `Bool`, `Float`, `Short`, `Long` and `Array`
+The return annotation declares what the function should return
 
-For array arguments you can use the `[]` suffix, for example `Float[]`. Multidimensional arrays are also valid, for example `String[][]`.
+```mcfunction
+# Attempts to give weakness
+#
+# @return 1 if the target was invalid
+```
 
-You can also define custom types.
+### <font style="font-family: 'Courier New', monospace;">@hidden</font>
 
-##### Custom Types
+The hidden annotation will hide a function from the generated document.
 
-To add custom types, you must have a file named `types` in the data directory of your datapack.
+Hidden functions can be 'unhidden' if you use the `showhidden=true` flag
 
-To add a custom type, the syntax is the following:
+### <font style="font-family: 'Courier New', monospace;">@deprecated</font>
+
+The deprecated annotation is intended to mark that a function should not be used. 
+
+It will be noted next to the function name in the generated document.
+
+### <font style="font-family: 'Courier New', monospace;">@see</font>
+
+The see annotation is intended to point the user in the direction of other relevant functions.
+
+```mcfunction
+# Clears menu items from the user
+#
+# @see example:menu/test
+```
+
+### Custom Annotations
+
+You can use custom annotations by setting the `undeftags` flag to true. The first letter of the annotation name will be capitalised when displayed in the generated document.
+
+By default, using an unrecognised annotation will cause an error, but notify you that you can use the flag.
+
+
+## Parameter Types
+
+By default, MCFDoc only recognises 7 types:
+
+`Int`, `String`, `Bool`, `Float`, `Short`, `Long` and `Array`
+
+You can make any of these types an array by adding the `[]` suffix. Any number of dimensions is allowed.
+
+### Custom Types
+
+In order to provide other types, you must make a file named `types` with no extension in the data directory of your datapack.
+
+Inside this file you can declare types with the following syntax:
 
 ~~~
 #<type name>
@@ -66,11 +125,9 @@ type description
 type 2 description
 ~~~
 
-If you prefix a line with `!` it will not be parsed
+You can write comments in the types file, by prefixing the line with `!`.
 
-There is no limit to the number of types that can be defined. 
-
-Defined types can be used as arrays when used in parameters.
+There is no limit to the number of types that can be defined.
 
 For example
 
@@ -82,155 +139,88 @@ An object with an x, y, and z value
 will define a new type called `BlockPos` which can be used:
 
 ~~~
-# @param position: BlockPos the position to execute at
-# @param snake: BlockPos[] the positions that need resetting
+# @param position: BlockPos
+# @param snake: BlockPos[]
 ~~~
 
-Custom types will also appear at the top of the generated MCFDoc page with their description.
+Custom types will be listed similarly to functions at the top of the generated document.
 
- #### Other tags
+## Using HTML
 
- There are a selection of other tags, though none are fancy like the parameter tag. 
+As the content you put in comments is converted to static html, you can use html elements.
 
- > The format for all other tags is `@<tag name> <description>`
- 
- The list is:
-`author`, `return`, `see`, `version`, `deprecated`, `since`, `example` and `hidden`
+There are 3 different levels which customise what elements can, and cannot, be used. 
 
-The description message can run over multiple lines.
+It defaults to `SAFE` but can be changed with the flag `html=<ALL|SAFE|NONE>`
 
-##### Deprecated
+### <font style="font-family: 'Courier New', monospace;">None</font>
 
-The `@deprecated` tag is intended to indicate whether a function is outdated or going to be removed. 
+By setting html to `NONE`, all html elements will be translated into text equivalents, including line breaks (`<br>`)
 
-Functions with marked with this tag will have this noted in red next to their name in the MCFDoc, for example:
+### <font style="font-family: 'Courier New', monospace;">Safe</font>
 
-<code>example:helper/broadcast <font color="#BB1111">(Deprecated)</font></code>
+By setting html to `SAFE`, a selection of safe formatting elements can be used:
 
-##### Hidden
+`<br>`, `<strong>`,  `<i>`, `<small>`, `<big>`, `<ins>` and `<del>`
 
-The `@hidden` tag allows you to prevent a function from appearing in the MCFDoc.
+### <font style="font-family: 'Courier New', monospace;">All</font>
 
-There is no message for this tag, unlike the others.
+By setting html to `ALL`, all elements are permitted
 
-If, however, the `showhidden` flag is set to true, it will appear, as such:
+An example use of this would be to make a popup:
 
-<code>example:test/hidden <font color="#1111BB">(Hidden)</font></code>
-
-It is indended for functions which are irrelevant to the user, such as internals in a library.
-
-##### Custom Tags
-
-By default, using an undefined tag will throw an error, but if you use the flag `undeftags=<true|false>` you are able to enable them.
-
-They follow the same syntax:
-
-~~~
-# @customtag Hello world
-~~~
-
-If the name of the tag does not begin with a capital letter, the first letter will be capitalised when printed in the MCFDoc.
-
-### HTML usage in MCFDoc comments
-
-As the content you put in the names and descriptions inside the MCFDoc comments is converted to HTML elements, it is possible to use HTML tags and create some customisation.
-
-When compiling, there are 3 options for HTML sanitation:
-
-> Note: This defaults to `SAFE`, and can be changed with the flag `html=<NONE|SAFE|ALL>`
-
-- `NONE`: This converts all HTML sensitive characters into their text form, preventing any use of HTML in comments
-
-- `SAFE` allows only for a small selection of HTML elements to be kept. <br>These are `<br>`, `<strong>`,  `<i>`, `<small>`, `<big>`, `<ins>` and `<del>`.
-
-- `ALL` prevents all sanitation from ocurring
-
-NONE is not recommended as all linebreaks will appear in text form as \<br\>. 
-
-> Note: By setting html to ALL, you can add JavaScript to comments, which will then be kept in the resulting HTML file. This does mean that it is possible to smuggle malicious code in comments, and so you should only use MCFDoc on your own datapacks. 
-
-An example use of this would be to make a popup, with html set to ALL
-
-~~~
-# Called when the world is either /reloaded or the world first loads
+~~~mcfunction
 # <script> alert("This datapack is by ThisIsNotMyName314"); </script>
 ~~~
 
-### Generating the MCFDoc
+If you don't know what the comments in the datapack contain, there is a risk that unchecked, potentially harmful, code could be executed in your browser when you open the generated MCFDoc.
 
-To generate an MCFDoc you use the `/mcfdoc generate` command from the chat if using the mod.
+## Making the Document
 
-If you are using the standalone Jar, use `java -jar MCFDoc.jar <flags>` instead.
+To create a document you must execute the Jar with flags to indicate where the datapack is and where you want the output.
 
-There are 2 essential flags that have to be used:
+For example:
 
-1. `dir` which specifies the absolute path to the datapack, for example
-/home/user/Documents/datapack on Linux.
+`java -jar MCFDoc-1.2.0.jar <flags>`
 
-2. `out` which specifies the output path (including the file to write to), for example /home/user/Documents/output.html on Linux.
+### Required flags
 
- To reference relative to your current working directory you can use the  `./name` on linux or maxOS or `.\name` syntax on windows.
+You must provide the `dir` flag, which points to the datapack directory, and the `out` flag which points to the output file.
 
-And 6 optional:
+For example (with Unix style paths):
 
-1. `html` is optional and defaults to SAFE
+`... dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
 
-2. `overwrite` Enables you to allow overwriting when creating the output file. Defaults to false
+### Optional flags
 
-3. `author` lets you specify the author name to include at the top of the generated file
+`html=<ALL|SAFE|NONE>` to configure what html elements are permitted, defaults to `SAFE`
 
-4. `description` lets you specify a description for the datapack
+`overwrite=<true|false>` to configure whether the output can overwrite a file, defaults to `false`
 
-5. `version` lets you specify the version of the datapack
+`author=...` to set the name of the datapack author
 
-6. `legacy` is a boolean flag. When set to true it will search for a 'functions' folder, not a 'function' folder (this name change was caused in the [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a))
+`description=...` to set a description for the datapack
 
-7. `undeftags` is also a boolean flag, letting you specify whether custom tags are allowed. It defaults to false.
+`version=...` to specify a version for the datapack
 
-8. `prefixtypes` is a boolean flag, it defaults to false. When set to true, the functions in the MCFDoc will have the parameter types written before the name, like in C style languages.
+`legacy=<true|false>` to configure whether to search for a `functions` directory instead of `function` (the name was changed in [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a)), defaults to `false`
 
-9. `showhidden` is also a boolean flag, defaulting to false. When true, hidden functions will be visible in the MCFDoc.
+`undeftags=<true|false>` to configure whether to permit unrecognised annotations, defaults to `false`
 
-If you require spaces in the flag value, you can enclose it in double quotes. Quotes are trimmed if present and so if quotes are used inside the value they do not need to be escaped.
+`prefixtypes=<true|false>` to configure whether the types should be infront of the function name in the generated document, defaults to `false`
 
-> Note: By running the Jar with no arguments, or with a `help` argument, it will output a list with all possible flags.
+`showhidden=<true|false>` to configure whether to display hidden functions, defaults to `false`
 
-### Examples
-
-Linux:
-
-`/mcfdoc generate dir=/home/user/Documents/datapack out=/home/user/Documents/output.html`
-
-MacOS:
-
-`/mcfdoc generate dir=/Users/user/Documents/datapack out=/Users/user/Documents/output.html`
-
-Windows:
-
-`/mcfdoc generate dir=C:\Users\User\Documents\datapack out=C:\Users\User\Documents\output.html`
-
-For the standalone Jar, replace `/mcfdoc generate` with `java -jar MCFDoc.jar` and run from the command line.
-
-Attached in this repository is an example datapack (datapack) and the generated MCFDoc (output.html) for it.
+String values can be encased in quotes. Escape codes shouldn't be used.
 
 ### Errors
 
-You will be notified if there are any errors, with a message indicating the problem.
+If any errors occur you will be notified with a message indicating what went wrong.
 
 Parser errors have a `[<function path>]` suffix to indicate which function caused the error.
 
-#### Errors in the mod:
+## Downloads
 
-There is a possibility that you may try and access a file that the process does not have access to. 
+Jar files for versions are stored in the [versions directory](./versions)
 
-If using Prism Launcher on Linux, installed as a Flatpak, Minecraft is sandboxed and so, by default, you have very limited file access. 
-
-If this is the case, you can grant full filesystem access with the command (from the terminal)<br>
-`sudo flatpak override org.prismlauncher.PrismLauncher --filesystem=host`<br>
-
-You must then restart Prism Launcher (and Minecraft).
-
-If the file is still not found, use the standalone MCFDoc Jar.
- 
-
-
+Alternatively you could clone and then compile the source code.
