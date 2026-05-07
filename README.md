@@ -203,7 +203,9 @@ For example (with Unix style paths):
 
 `version=...` to specify a version for the datapack
 
-`legacy=<true|false>` to configure whether to search for a `functions` directory instead of `function` (the name was changed in [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a)), defaults to `false`
+`legacy=<true|false>` to configure whether to search for a `functions` directory instead of `function` (the name was changed in [1.21 snapshot 24w21a](https://minecraft.wiki/w/Java_Edition_24w21a)), defaults to `false` 
+
+Note that in and after v2 this flag will be removed, and it will check for both names automatically.
 
 `undeftags=<true|false>` to configure whether to permit unrecognised annotations, defaults to `false`
 
