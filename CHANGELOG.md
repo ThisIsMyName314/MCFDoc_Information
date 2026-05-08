@@ -20,3 +20,5 @@ Functions with invalid names are now skipped
 1st May 26
 
 Number of modules is now stated after the Function Summary title
+
+#### v2.0.0
