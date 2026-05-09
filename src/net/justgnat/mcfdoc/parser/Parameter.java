@@ -1,15 +1,9 @@
 package net.justgnat.mcfdoc.parser;
 
-/*
-A parameter is a macro that is required for the function to run
+/**
+ * Represents a macro argument for a function.
  */
-public record Parameter (String name, ParamType type, String info) {
-
-    public record ParamType(String name) {
-        public String getColouredName() {
-            return "<font color=\"#AA00AA\">" + this.name + "</font>";
-        }
-    }
+public record Parameter (String name, ParameterType type, String info) {
 
     @Override
     public String toString() {

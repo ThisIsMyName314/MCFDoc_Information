@@ -15,6 +15,10 @@ public class HtmlSanitiser {
         this.strength = strength;
     }
 
+    public static String sanitise(String content, Strength strength) {
+        return (new HtmlSanitiser(content, strength)).sanitise();
+    }
+
     /**
      * Sanitises the input and returns a modified version.
      */

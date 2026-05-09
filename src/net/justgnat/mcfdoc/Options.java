@@ -11,7 +11,6 @@ public class Options {
     public String description;
     public String version;
     public boolean canOverwrite;
-    public boolean legacyNames;
     public boolean undefinedTags;
     public boolean prefixTypesInOutput;
     public boolean showHidden;
@@ -24,7 +23,6 @@ public class Options {
         description = "";
         version = "";
         canOverwrite = false;
-        legacyNames = false;
         undefinedTags = false;
         prefixTypesInOutput = false;
         showHidden = false;
@@ -47,8 +45,6 @@ public class Options {
             case "desc": description = value;
                 break;
             case "overwrite": canOverwrite = value.equals("true");
-                break;
-            case "legacy": legacyNames = value.equals("true");
                 break;
             case "undeftags": undefinedTags = value.equals("true");
                 break;

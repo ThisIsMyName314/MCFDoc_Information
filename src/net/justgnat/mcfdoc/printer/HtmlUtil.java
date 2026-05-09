@@ -22,6 +22,30 @@ public class HtmlUtil {
         return "<h3>" + content + "</h3>";
     }
 
+    public static String a(String href, String content) {
+        return "<a href=\"" + href + "\">" + content + "</a>";
+    }
+
+    public static String h2(String clazz, String content) {
+        return "<h2 class=\"" + clazz + "\">" + content + "</h2>";
+    }
+
+    public static String table(String content) {
+        return "<table>" + content + "</table>";
+    }
+
+    public static String tr(String content) {
+        return "<tr>" + content + "</tr>";
+    }
+
+    public static String td(String content) {
+        return "<td>" + content + "</td>";
+    }
+
+    public static String th(String content) {
+        return "<th>" + content + "</th>";
+    }
+
     public static String div(String clazz, String content) {
         return "<div class=\"" + clazz + "\">" +
                 content + "</div>";

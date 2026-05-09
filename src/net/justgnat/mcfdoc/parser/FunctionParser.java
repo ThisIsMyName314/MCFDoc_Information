@@ -5,6 +5,8 @@ import java.util.List;
 
 public class FunctionParser {
 
+    private static final String COMMENT_PREFIX = "#";
+
     private final List<String> lines;
 
     private final Function.Builder builder;
@@ -17,14 +19,11 @@ public class FunctionParser {
 
     private int index;
 
-    /**
-     * Constructs a Function from the given lines.
-     * @param functionName The full name of the function, with the namespace and full path.
-     */
-    public FunctionParser(String functionName, List<String> lines, boolean allowUndefinedTags, TypeManager typeManager) {
+    public FunctionParser(String fullName, String simpleName, List<String> lines, boolean allowUndefinedTags, TypeManager typeManager) {
         this.lines = lines;
         builder = new Function.Builder();
-        builder.name = functionName;
+        builder.name = fullName;
+        builder.simpleName = simpleName;
         this.undefinedTags = allowUndefinedTags;
         this.typeManager = typeManager;
     }
@@ -34,7 +33,6 @@ public class FunctionParser {
     }
 
     /**
-     * Attempts to parse the given lines.
      * @throws RuntimeException if the comments in the MCFDoc are invalid.
      */
     public Function parse() {
@@ -52,7 +50,7 @@ public class FunctionParser {
             if (line.isEmpty())
                 continue;
 
-            if (!line.startsWith("#"))
+            if (!line.startsWith(COMMENT_PREFIX))
                 return;
             (new Tokeniser(line.substring(1), tokens)).parse();
         }
@@ -75,7 +73,7 @@ public class FunctionParser {
                     builder.description.append(':');
                     break;
                 case TAG:
-                    parseTag(token);
+                    parseAnnotation(token);
                     break;
             }
         }
@@ -92,54 +90,54 @@ public class FunctionParser {
         return type == Tokeniser.Type.SPACE || type == Tokeniser.Type.TAB;
     }
 
-    private void parseTag(Tokeniser.Token tag) {
+    private void parseAnnotation(Tokeniser.Token tag) {
         switch (tag.literal) {
             case "author":
-                builder.tags.add(new Tag.Author(getTagBody()));
+                builder.annotations.add(new Annotation.Author(getAnnotationBody()));
                 break;
             case "param":
                 parseParam();
                 break;
             case "returns":
             case "return":
-                builder.tags.add(new Tag.Return(getTagBody()));
+                builder.annotations.add(new Annotation.Return(getAnnotationBody()));
                 break;
             case "see":
-                builder.tags.add(new Tag.See(getTagBody()));
+                builder.annotations.add(new Annotation.See(getAnnotationBody()));
                 break;
             case "version":
-                builder.tags.add(new Tag.Version(getTagBody()));
+                builder.annotations.add(new Annotation.Version(getAnnotationBody()));
                 break;
             case "deprecated":
                 builder.deprecated = true;
-                builder.tags.add(new Tag.Deprecated(getTagBody()));
+                builder.annotations.add(new Annotation.Deprecated(getAnnotationBody()));
                 break;
             case "since":
-                builder.tags.add(new Tag.Since(getTagBody()));
+                builder.annotations.add(new Annotation.Since(getAnnotationBody()));
                 break;
             case "examples":
             case "example":
-                builder.tags.add(new Tag.Example(getTagBody()));
+                builder.annotations.add(new Annotation.Example(getAnnotationBody()));
                 break;
             case "executor":
-                builder.tags.add(new Tag.Executor(getTagBody()));
+                builder.annotations.add(new Annotation.Executor(getAnnotationBody()));
                 break;
             case "hidden":
                 builder.hidden = true;
                 break;
             default: {
-                parseUndefinedTag(tag.literal);
+                parseUndefinedAnnotation(tag.literal);
             }
         }
     }
 
-    private void parseUndefinedTag(String tagString) {
+    private void parseUndefinedAnnotation(String name) {
         if (!undefinedTags) {
-            error("Unknown tag '" + tagString + "'. Use the flag [undeftags=<true|false>] to decide whether to allow undefined tags");
+            error("Unknown annotation '" + name + "'. Use the flag [undeftags=<true|false>] to decide whether to allow undefined annotations");
         }
-        Tag tag = Tag.from(tagString, getTagBody());
-        if (tag != null) {
-            builder.tags.add(tag);
+        Annotation annotation = Annotation.from(name, getAnnotationBody());
+        if (annotation != null) {
+            builder.annotations.add(annotation);
         }
     }
 
@@ -161,7 +159,7 @@ public class FunctionParser {
         if (current().type == Tokeniser.Type.COLON) {
             eatWhitespace();
         }
-        Parameter.ParamType type = getParameterType();
+        ParameterType type = getParameterType();
         eatWhitespace();
         String description = greedyString();
         builder.parameters.add(new Parameter(name, type, description));
@@ -178,37 +176,34 @@ public class FunctionParser {
             case TYPE_STRING: return "String";
             default: error("Expected name for parameter");
         }
-        return null;
+        return null; // Unreachable
     }
 
-    private Parameter.ParamType getParameterType() {
+    private ParameterType getParameterType() {
         return switch (current().type) {
-            case TYPE_BOOL -> new Parameter.ParamType("Bool");
-            case TYPE_FLOAT -> new Parameter.ParamType("Float");
-            case TYPE_STRING -> new Parameter.ParamType("String");
-            case TYPE_INT -> new Parameter.ParamType("Int");
-            case TYPE_OTHER -> new Parameter.ParamType("Other");
+            case TYPE_BOOL -> ParameterType.BOOL;
+            case TYPE_FLOAT -> ParameterType.FLOAT;
+            case TYPE_STRING -> ParameterType.STRING;
+            case TYPE_INT -> ParameterType.INT;
+            case TYPE_OTHER -> ParameterType.OTHER;
             default -> {
+                String name = current().literal;
                 if (current().type == Tokeniser.Type.STRING) {
-                    String name = current().literal;
                     typeManager.checkTypeIsDefined(name);
-                    yield new Parameter.ParamType(name);
+                    yield ParameterType.custom(name);
                 }
-                error("Invalid type for parameter. Use 'Other' to indicate other types");
+                error("Undefined type '" + name + "'. Define custom types in a types file.");
                 yield null;
             }
         };
     }
 
-    private String getTagBody() {
+    private String getAnnotationBody() {
         ++index;
         if (atEnd()) throw new RuntimeException("Missing body of tag");
         return greedyString();
     }
 
-    /**
-     * Eats tokens until a new tag, and returns them as a string.
-     */
     private String greedyString() {
         StringBuilder sb = new StringBuilder();
 

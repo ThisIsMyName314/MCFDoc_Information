@@ -53,8 +53,8 @@ public class TypeManager {
         }
     }
 
-    /*
-    Checks that the type, that must be an array, is valid.
+    /**
+     * @throws UndefinedTypeException if the type is undefined
      */
     private void checkArrayType(String type) throws UndefinedTypeException {
         int firstBracket = type.indexOf('[');
@@ -81,8 +81,9 @@ public class TypeManager {
                 else throw new UndefinedTypeException("Missing closing bracket for array type '" + type + "'");
             }
         }
-        if (!closed)
+        if (!closed) {
             throw new UndefinedTypeException("Missing closing bracket for array type '" + type + "'");
+        }
     }
 
 }

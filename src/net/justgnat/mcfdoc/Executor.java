@@ -2,8 +2,8 @@ package net.justgnat.mcfdoc;
 
 import net.justgnat.mcfdoc.parser.Datapack;
 import net.justgnat.mcfdoc.parser.DatapackParser;
-import net.justgnat.mcfdoc.printer.DatapackPrinter;
 import net.justgnat.mcfdoc.parser.TypeManager;
+import net.justgnat.mcfdoc.printer.DatapackPrinter;
 
 public class Executor {
 

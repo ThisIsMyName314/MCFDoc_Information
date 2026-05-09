@@ -24,13 +24,6 @@ public class TypeParser {
     }
 
     public void parse() throws InvalidTypeNameException {
-        /*
-        Format
-        #typename
-            description
-        #typename2
-            description
-         */
         builder = new CustomType.Builder();
         for (String line : lines) {
             if (!line.isEmpty() && line.charAt(0) != '!') // ! is a comment prefix
@@ -60,7 +53,7 @@ public class TypeParser {
                 builder = new CustomType.Builder();
             }
 
-            String typeName = line.substring(1);
+            String typeName = line.substring(1).trim();
 
             if (!isValidTypeName(typeName)) {
                 throw new InvalidTypeNameException("Invalid type name '" + typeName + "'");

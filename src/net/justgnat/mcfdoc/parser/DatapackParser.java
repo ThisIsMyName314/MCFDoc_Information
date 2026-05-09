@@ -11,15 +11,15 @@ import java.util.List;
 
 public class DatapackParser {
 
-    public static final String EXTENSION = ".mcfunction";
+    public static final String FUNCTION_EXTENSION = ".mcfunction";
 
-    public static final String TYPES_NAME = "types";
+    public static final String TYPES_FILE_NAME = "types";
 
     private final TypeManager typeManager;
 
     private final Datapack.Builder datapack = new Datapack.Builder();
 
-    private FunctionGroup.Builder functionBuilder = new FunctionGroup.Builder();
+    private final FunctionGroup.Builder moduleBuilder = new FunctionGroup.Builder();
 
     private final List<FunctionGroup> functionGroups = new LinkedList<>();
 
@@ -35,7 +35,8 @@ public class DatapackParser {
     }
 
     /**
-     * @throws RuntimeException if an error occurs. Can be either due to File parsing or invalid MCFDoc comments.
+     * Extracts the datapack path and attempts to read it.
+     * @throws RuntimeException if an error occurs. Can be either due to File parsing or invalid comments.
      */
     public static Datapack parseDatapack(Options options, TypeManager typeManager) {
         DatapackParser parser = new DatapackParser(options, typeManager);
@@ -48,6 +49,9 @@ public class DatapackParser {
         datapack.version = options.version;
 
         File datapackFile = new File(options.datapackPath);
+        if (!datapackFile.exists()) {
+            error("Datapack file does not exist");
+        }
 
         datapack.name = datapackFile.getName();
 
@@ -67,17 +71,24 @@ public class DatapackParser {
 
         File[] files = FileUtil.getSubFilesOrThrow(dataFile, "Failed to read data directory");
         for (File sub : files) {
-            if (sub.isDirectory() &&
-                    !sub.getName().equals("minecraft")) {
-                parseNamedSection(sub);
-                functionGroups.add(functionBuilder.build());
-                functionBuilder = new FunctionGroup.Builder();
+            if (sub.isDirectory()) {
+                parseModule(sub);
+                buildAndAddModule();
             }
         }
     }
 
+    private void buildAndAddModule() {
+        FunctionGroup module = moduleBuilder.build();
+        if (module != null)
+            functionGroups.add(module);
+    }
+
+    /**
+     * Checks whether there is a types file. If there is one it is parsed.
+     */
     private void tryParseTypesFile(File dataFile) {
-        File typesFile = new File(dataFile.getAbsolutePath() + "/" + TYPES_NAME);
+        File typesFile = new File(dataFile.getAbsolutePath() + "/" + TYPES_FILE_NAME);
         if (typesFile.exists()) {
             parseTypesFile(typesFile);
         }
@@ -94,50 +105,54 @@ public class DatapackParser {
         }
     }
 
-    private void parseNamedSection(File file) {
+    private void parseModule(File file) {
         String namespace = file.getName() + ":";
 
         File[] files = FileUtil.getSubFilesOrThrow(file, "Failed to read directory " + file.getAbsolutePath());
-        final String functionFolder = options.legacyNames ? "functions" : "function";
 
         for (File sub : files) {
-            if (sub.isDirectory() &&
-                    sub.getName().equals(functionFolder)) {
+            if (isFunctionDirectory(sub)) {
                 parseFunctions(namespace, sub);
             }
         }
     }
 
+    private boolean isFunctionDirectory(File file) {
+        return file.isDirectory() && (file.getName().equals("function") ||
+                file.getName().equals("functions"));
+    }
+
     private void parseFunctions(String namespace, File parent) {
-        Logger.write("Parsing functions in " + parent.getAbsolutePath());
+        Logger.write("Parsing functions in " + parent.getPath());
 
         File[] files = FileUtil.getSubFilesOrThrow(parent, "Failed to read directory " + parent.getAbsolutePath());
 
         for (File file : files) {
             if (file.isDirectory()) {
                 parseFunctions(namespace + file.getName() + "/", file);
-            } else {
-                parseFile(namespace, file);
+            } else if (isFunction(file)) {
+                parseFunctionFile(namespace, file);
             }
         }
     }
 
-    private void parseFile(String namespace, File file) {
-        if (!isFunction(file))
-            return;
-
+    private void parseFunctionFile(String namespace, File file) {
         String functionName = getFunctionName(file);
         if (!isValidName(functionName)) {
             Logger.write("Skipping function with invalid name '" + functionName + "'");
             return;
         }
 
-        functionBuilder.namespace = namespace.substring(0, namespace.length() - 1);
-        String name = namespace + functionName;
-        FunctionParser parser = new FunctionParser(name, FileUtil.read(file), options.undefinedTags, typeManager);
+        // Remove the colon at the end
+        moduleBuilder.namespace = namespace.substring(0, namespace.length() - 1);
+
+        // The colon is in the namespace string
+        String fullFunctionName = namespace + functionName;
+
+        FunctionParser parser = new FunctionParser(fullFunctionName, functionName, FileUtil.read(file), options.undefinedTags, typeManager);
 
         try {
-            functionBuilder.functions.add(parser.parse());
+            moduleBuilder.functions.add(parser.parse());
         } catch (Exception e) {
             error("Error whilst parsing: " + e.getMessage());
         }
@@ -147,11 +162,11 @@ public class DatapackParser {
 
     private String getFunctionName(File file) {
         String fileName = file.getName();
-        return fileName.substring(0, fileName.length() - (EXTENSION.length()));
+        return fileName.substring(0, fileName.length() - (FUNCTION_EXTENSION.length()));
     }
 
     private boolean isFunction(File file) {
-        return file.getName().endsWith(EXTENSION);
+        return file.getName().endsWith(FUNCTION_EXTENSION);
     }
 
     private boolean isValidName(String name) {

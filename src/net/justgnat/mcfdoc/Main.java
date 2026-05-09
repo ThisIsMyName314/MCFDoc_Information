@@ -6,7 +6,7 @@ public class Main {
         if (args.length == 0 || args[0].endsWith("help")) {
             System.out.println(
                 """
-                MCFDoc v1.0.0
+                MCFDoc v2.0.0
                 
                 Required
                 dir=<datapack path>
@@ -18,7 +18,6 @@ public class Main {
                 version=<version>
                 author=<author>
                 overwrite=<true|false>
-                legacy=<true|false>
                 prefixtypes=<true|false>
                 undeftags=<true|false>
                 """
