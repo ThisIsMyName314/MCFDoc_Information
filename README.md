@@ -27,6 +27,10 @@ It aims to be
      - [Optional Flags](#optional-flags)
      - [Errors](#errors)
   - [Downloads](#downloads)  
+  - [Mod Troubleshooting](#Mod-troubleshooting)
+     - [File not found](#file-not-found-or-data-directory-not-found)
+
+You can download it as a standalone Jar to run from the command line, or as a [fabric mod from Modrinth](https://modrinth.com/mod/mcfdoc)
 
 ## How to use
 
@@ -222,3 +226,17 @@ Parser errors have a `[<function path>]` suffix to indicate which function cause
 Jar files for versions are stored in the [versions directory](./versions)
 
 Alternatively you could clone and then compile the source code.
+
+If you want to use it in-game, you can download it as a [fabric mod on Modrinth](https://modrinth.com/mod/mcfdoc)!
+
+## Mod Troubleshooting
+
+### File not found or data directory not found
+
+If you are running Minecraft in a sandboxed environment, you may get an error saying that the data directory could not be found, even though the path is correct.
+
+If you are running Minecraft through Prism Launcher on Linux, downloaded as a FlatPak, you will need to give org.prism.PrismLauncher permissions to access your file system.
+
+I can't guarantee that this is the best way to do this, but the command `sudo flatpak override org.prismlauncher.PrismLauncher --filesystem=host` should work if this is the case.
+
+If you have malicious mods that may want to access other parts of your filesystem you don't want, they will then be able to, which may cause problems.
