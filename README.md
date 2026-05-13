@@ -213,6 +213,8 @@ For example (with Unix style paths):
 
 `showhidden=<true|false>` to configure whether to display hidden functions, defaults to `false`
 
+`showimpspecheaders=<true|false>` (v2.0.1+) whether to hide [IMP-Spec](https://github.com/Arcensoth/imp-spec) headers in function descriptions. The headers start with a `>` on the first line of the comment block. Defaults to `false`.
+
 String values can be encased in quotes. Escape codes shouldn't be used.
 
 ### Errors
