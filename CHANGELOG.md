@@ -39,3 +39,8 @@ The help message has been updated to show the correct version (1.1 and 1.2 both 
 
 Fixed the module name not being sanitised in the output.
 
+#### v2.0.1
+
+13th May 2026
+
+New `showimpspecheaders` flag
