@@ -27,7 +27,7 @@ Number of modules is now stated after the Function Summary title
 
 Completely changed the format of the output, to appear more similar to Java Doc pages, including a new function summary with hyperlinks to go to the given function
 
-Functions under the `minecraft` namespace and now also read
+Functions declared under the `minecraft` namespace and now also read
 
 Removed the `legacy` flag, now both function and functions directories are checked automatically.
 
