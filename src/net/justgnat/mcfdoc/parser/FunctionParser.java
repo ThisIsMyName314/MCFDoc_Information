@@ -6,12 +6,13 @@ import java.util.List;
 public class FunctionParser {
 
     private static final String COMMENT_PREFIX = "#";
+    private static final String IMP_HEADER_PREFIX = ">";
 
     private final List<String> lines;
 
     private final Function.Builder builder;
 
-    private final boolean undefinedTags;
+    private final boolean undefinedTags, showImpSpecHeaders;
 
     private final TypeManager typeManager;
 
@@ -19,13 +20,14 @@ public class FunctionParser {
 
     private int index;
 
-    public FunctionParser(String fullName, String simpleName, List<String> lines, boolean allowUndefinedTags, TypeManager typeManager) {
+    public FunctionParser(String fullName, String simpleName, List<String> lines, boolean allowUndefinedTags, boolean showImpSpecHeaders, TypeManager typeManager) {
         this.lines = lines;
         builder = new Function.Builder();
         builder.name = fullName;
         builder.simpleName = simpleName;
         this.undefinedTags = allowUndefinedTags;
         this.typeManager = typeManager;
+        this.showImpSpecHeaders = showImpSpecHeaders;
     }
 
     private void error(String cause) {
@@ -45,6 +47,8 @@ public class FunctionParser {
         /* ArrayList for random access */
         tokens = new ArrayList<>();
 
+        boolean firstLine = true;
+
         for (String line : lines) {
             line = line.trim();
             if (line.isEmpty())
@@ -52,7 +56,17 @@ public class FunctionParser {
 
             if (!line.startsWith(COMMENT_PREFIX))
                 return;
-            (new Tokeniser(line.substring(1), tokens)).parse();
+
+            line = line.substring(1);
+
+            if (firstLine) {
+                firstLine = false;
+                if (!showImpSpecHeaders && line.startsWith(IMP_HEADER_PREFIX)) {
+                    continue;
+                }
+            }
+
+            (new Tokeniser(line, tokens)).parse();
         }
     }
 

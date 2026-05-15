@@ -14,6 +14,7 @@ public class Options {
     public boolean undefinedTags;
     public boolean prefixTypesInOutput;
     public boolean showHidden;
+    public boolean showImpSpecHeaders;
 
     public Options() {
         datapackPath = null;
@@ -26,6 +27,7 @@ public class Options {
         undefinedTags = false;
         prefixTypesInOutput = false;
         showHidden = false;
+        showImpSpecHeaders = true;
     }
 
     /**
@@ -54,6 +56,9 @@ public class Options {
                 break;
             case "showhidden":
                 showHidden = value.equals("true");
+                break;
+            case "showimpspecheaders":
+                showImpSpecHeaders = value.equals("true");
                 break;
             default: throw new RuntimeException("Unknown flag '" + key + "'");
         }
