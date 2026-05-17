@@ -79,12 +79,13 @@ public class DatapackPrinter {
 
         String footer = h5(credits) + "</body></html>";
 
-        String title = datapack.name();
-        if (datapack.hasVersion()) title += " " + datapack.version();
-        if (datapack.hasAuthors()) title += " by " + datapack.author();
+        String title = h1(datapack.name());
+        String subtitle = (datapack.hasVersion() ? datapack.version() : "");
+        if (datapack.hasAuthors()) subtitle += " by " + datapack.author();
 
         return header +
-                h1(title) + // Do not need to sanitise as these are provided at the command line
+                title + // Do not need to sanitise as these are provided at the command line
+                h2(subtitle) +
                 p(datapack.description()) +
                 generateTypeBlock() +
                 generateFunctionSummary() +

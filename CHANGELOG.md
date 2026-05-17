@@ -44,3 +44,9 @@ Fixed the module name not being sanitised in the output.
 13th May 2026
 
 New `showimpspecheaders` flag
+
+#### v2.0.2
+
+17th May 2026
+
+Datapack version and authors are now attached below the datapack name
