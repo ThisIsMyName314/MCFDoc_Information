@@ -3,6 +3,7 @@
 In order to differentiate parts of a comment, annotations are used.
 
 Any word prefixed with the `@` symbol will be interpreted as an annotation. 
+
 In order to prevent this happening, use the `&#64;` html code instead. By default, unrecognised annotations will throw an error unless the `undeftags=true` flag is included.
 
 - [Default Annotations](#Default-Annotations)
@@ -111,7 +112,7 @@ Intended for library datapacks, to provide information regarding what versions t
 
 For customisation, and as it is not possible to hardcode all useful annotations, you can write your own.
 
-Any word prefixed with the `@` symbol is valid, however to allow this you may need to add the flag `undeftags=true`
+Any word prefixed with the `@` symbol is valid, however in order to allow this you may need to add the flag `undeftags=true`
 
 ### Exaple Annotation `@warn`
 
