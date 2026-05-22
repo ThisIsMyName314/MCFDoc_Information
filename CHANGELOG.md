@@ -15,7 +15,7 @@ New `showhidden` flag
 
 30th April 26
 
-Functions with invalid names are now skipped
+Functions with invalid names are now skipped 
 
 1st May 26
 
