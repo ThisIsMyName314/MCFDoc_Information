@@ -15,6 +15,8 @@
 - The 'Missing Message' error message now logs the function causing the error
 - Multiple lines for certain annotations are now grouped more closely together
 - Various changes to the output format and design
+- The `showimpspecheaders` now defaults to false
+- The date created is now shown in a readable format at the bottom of the output
 
 ## 2.0.2 - 17th May 2026
 
