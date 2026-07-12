@@ -40,7 +40,7 @@ Declares what the function will return
 
 ### Annotation `@deprecated`
 
-Declares that a function is deprecated. Deprecated functions will have a red message next to the name in the generated document.
+Declares that a function is deprecated. Deprecated functions will have a red message above the name in the generated document. A message after the annotation is optional.
 
 ```
 # Broadcasts a message to all users
@@ -108,13 +108,23 @@ Intended for library datapacks, to provide information regarding what versions t
 # @since v6.7
 ```
 
+### Annotation `@context`
+
+Declares the expected execution context, mirroring the context annotation defined by Imp-Spec.
+
+```mcfunction
+# Spawn trigger execution
+#
+# @context trigger
+```
+
 ## Custom Annotations
 
 For customisation, and as it is not possible to hardcode all useful annotations, you can write your own.
 
 Any word prefixed with the `@` symbol is valid, however in order to allow this you may need to add the flag `undeftags=true`
 
-### Exaple Annotation `@warn`
+### Example Annotation `@warn`
 
 ```mcfunction
 # Kills all markers
