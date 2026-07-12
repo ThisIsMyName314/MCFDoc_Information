@@ -1,52 +1,85 @@
-#### v1.0.0 
+# Changelog
 
-25th April 26
+## 2.2.0 - 12th July 2026
 
-Initial version
+### Added
 
-#### v1.1.0
+ - New `context` annotation
+ - Deprecated and hidden functions will be marked when present in the output
 
-29th April 26
 
-New `@hidden` tag<br>
-New `showhidden` flag
+### Changed
 
-#### v1.2.0
+- The `deprecated` annotation may now have a message
+- The help message is now much more informative
+- The 'Missing Message' error message now logs the function causing the error
+- Multiple lines for certain annotations are now grouped more closely together
+- Various changes to the output format and design
 
-30th April 26
+## 2.0.2 - 17th May 2026
 
-Functions with invalid names are now skipped 
+### Changed
 
-1st May 26
+- Datapack version and author fields are now below the name in the output
 
-Number of modules is now stated after the Function Summary title
+## 2.0.1 - 13th May 2026
 
-#### v2.0.0
+### Added
 
-09th May 2026
+- New `showimpspecheaders` flag
 
-Completely changed the format of the output, to appear more similar to Java Doc pages, including a new function summary with hyperlinks to go to the given function
+## 2.0.0 - 9th May 2026
 
-Functions declared under the `minecraft` namespace and now also read
+### Changed
 
-Removed the `legacy` flag, now both function and functions directories are checked automatically.
+- The output format has been completely changed in order to more closely resemble JavaDoc pages
+- The function summary field now has clickable hyperlinks
+- Functions declared under the `minecraft` namespace are also now parsed
+- Both `function` and `functions` directories are now checked
+- Most references to 'tags' have been renamed to refer to 'annotations' for clarity
 
-The name of types does not have to immediately follow the `#` in the types file, you can now use tabs or spaces to separate them.
+### Removed
 
-Internally and in help messages 'tags' have been renamed to 'annotations' to better reflect what they are.
+- The `legacy` flag has been removed as it has become redundant
+- The number of modules is no longer displayed in the output
 
-The help message has been updated to show the correct version (1.1 and 1.2 both showed 1.0).
+### Fixed
 
-Fixed the module name not being sanitised in the output.
+- Type names do no longer have to immediately follow the `#`
+- The help message now displays the correct version
 
-#### v2.0.1
+### Security
 
-13th May 2026
+- The module name is now also sanitised in the output
 
-New `showimpspecheaders` flag
+## 1.2.0 - 30th April 2026
 
-#### v2.0.2
+### Added
 
-17th May 2026
+- Number of modules is now stated after the function summary title
 
-Datapack version and authors are now attached below the datapack name
+### Changed
+
+- Functions with invalid names are now skipped
+
+## 1.1.0 - 29th April 2026
+
+### Added
+
+- New `@hidden` tag
+- New `showhidden` flag
+
+## 1.0.0 - 25th April 2026
+
+Initial Release
+
+
+
+
+
+
+
+
+
+
+
