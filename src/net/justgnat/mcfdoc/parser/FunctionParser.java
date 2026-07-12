@@ -107,34 +107,36 @@ public class FunctionParser {
     private void parseAnnotation(Tokeniser.Token tag) {
         switch (tag.literal) {
             case "author":
-                builder.annotations.add(new Annotation.Author(getAnnotationBody()));
+                builder.annotations.add(new Annotation.Author(getAnnotationBody(true)));
                 break;
             case "param":
                 parseParam();
                 break;
             case "returns":
             case "return":
-                builder.annotations.add(new Annotation.Return(getAnnotationBody()));
+                builder.annotations.add(new Annotation.Return(getAnnotationBody(true)));
                 break;
             case "see":
-                builder.annotations.add(new Annotation.See(getAnnotationBody()));
+                builder.annotations.add(new Annotation.See(getAnnotationBody(true)));
                 break;
             case "version":
-                builder.annotations.add(new Annotation.Version(getAnnotationBody()));
+                builder.annotations.add(new Annotation.Version(getAnnotationBody(true)));
                 break;
             case "deprecated":
                 builder.deprecated = true;
-                builder.annotations.add(new Annotation.Deprecated(getAnnotationBody()));
+                String body = getAnnotationBody(false);
+                if (!body.isEmpty())
+                    builder.annotations.add(new Annotation.Deprecated(body));
                 break;
             case "since":
-                builder.annotations.add(new Annotation.Since(getAnnotationBody()));
+                builder.annotations.add(new Annotation.Since(getAnnotationBody(true)));
                 break;
             case "examples":
             case "example":
-                builder.annotations.add(new Annotation.Example(getAnnotationBody()));
+                builder.annotations.add(new Annotation.Example(getAnnotationBody(true)));
                 break;
-            case "executor":
-                builder.annotations.add(new Annotation.Executor(getAnnotationBody()));
+            case "context":
+                builder.annotations.add(new Annotation.Context(getAnnotationBody(true)));
                 break;
             case "hidden":
                 builder.hidden = true;
@@ -149,7 +151,8 @@ public class FunctionParser {
         if (!undefinedTags) {
             error("Unknown annotation '" + name + "'. Use the flag [undeftags=<true|false>] to decide whether to allow undefined annotations");
         }
-        Annotation annotation = Annotation.from(name, getAnnotationBody());
+        String body = getAnnotationBody(false);
+        Annotation annotation = Annotation.from(name, body);
         if (annotation != null) {
             builder.annotations.add(annotation);
         }
@@ -212,9 +215,14 @@ public class FunctionParser {
         };
     }
 
-    private String getAnnotationBody() {
+    private String getAnnotationBody(boolean force) {
         ++index;
-        if (atEnd()) throw new RuntimeException("Missing body of tag");
+        if (atEnd()) {
+            if (force)
+                throw new RuntimeException("Missing body of tag in function " + builder.name);
+            else
+                return "";
+        }
         return greedyString();
     }
 

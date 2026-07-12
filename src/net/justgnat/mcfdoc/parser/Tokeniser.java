@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Tokeniser {
 
+    private static final char ANNOTATION_PREFIX = '@';
+
     public enum Type {
         STRING, TAG, COLON, TYPE_INT, TYPE_FLOAT, TYPE_STRING, TYPE_BOOL, TYPE_OTHER, SPACE, TAB;
     }
@@ -39,14 +41,14 @@ public class Tokeniser {
         if (line.isEmpty())
             return;
 
-        if (line.charAt(0) != '@') {
+        if (line.charAt(0) != ANNOTATION_PREFIX) {
             addString(line, tokens);
             return;
         }
 
         index = 1;
 
-        // Get the tag after the @
+        // Get the tag after the ANNOTATION_PREFIX
         StringBuilder sb = new StringBuilder();
         for (; index < line.length(); ++index) {
             char chr = line.charAt(index);
@@ -59,6 +61,7 @@ public class Tokeniser {
         // Add the tag as a token
         tokens.add(new Token(Type.TAG, sb.toString()));
 
+        // Read the tag body
         for (;index < line.length(); ++index) {
             char chr = line.charAt(index);
             switch (chr) {
@@ -78,6 +81,8 @@ public class Tokeniser {
 
     private void parseWord(String line) {
         StringBuilder sb = new StringBuilder();
+
+        // read until a break such as a space
         for (; index < line.length(); ++index) {
             char chr = line.charAt(index);
             if (chr == ' ' || chr == '\n' || chr == '\t' || chr == ':') {
@@ -98,8 +103,8 @@ public class Tokeniser {
         }
     }
 
-    /*
-    Adds the string as a token, combining it if the previous token was also a string.
+    /**
+     * Adds a string. If the last token was also a string, it merges the two with a linebreak inbetween
      */
     private void addString(String string, List<Token> tokens) {
         if (!tokens.isEmpty()) {

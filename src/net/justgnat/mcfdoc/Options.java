@@ -27,7 +27,7 @@ public class Options {
         undefinedTags = false;
         prefixTypesInOutput = false;
         showHidden = false;
-        showImpSpecHeaders = true;
+        showImpSpecHeaders = false;
     }
 
     /**

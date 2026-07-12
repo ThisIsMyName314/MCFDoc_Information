@@ -149,7 +149,14 @@ public class DatapackParser {
         // The colon is in the namespace string
         String fullFunctionName = namespace + functionName;
 
-        FunctionParser parser = new FunctionParser(fullFunctionName, functionName, FileUtil.read(file), options.undefinedTags, options.showImpSpecHeaders, typeManager);
+        FunctionParser parser = new FunctionParser(
+                fullFunctionName,
+                functionName,
+                FileUtil.read(file),
+                options.undefinedTags,
+                options.showImpSpecHeaders,
+                typeManager
+        );
 
         try {
             moduleBuilder.functions.add(parser.parse());

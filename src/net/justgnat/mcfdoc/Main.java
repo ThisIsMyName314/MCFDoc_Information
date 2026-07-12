@@ -2,24 +2,26 @@ package net.justgnat.mcfdoc;
 
 public class Main {
 
+    public static final String VERSION = "v2.0";
+
     public static void main(String[] args) {
         if (args.length == 0 || args[0].endsWith("help")) {
             System.out.println(
+                "MCFDOC " + VERSION +
                 """
-                MCFDoc v2.0.0
-                
+                \n
                 Required
-                dir=<datapack path>
-                out=<output path>
+                dir=<datapack path>         the path to the datapack
+                out=<output path>           the path to the output file
 
                 Optional
-                html=<ALL|SAFE|NONE>
-                desc=<description>
-                version=<version>
-                author=<author>
-                overwrite=<true|false>
-                prefixtypes=<true|false>
-                undeftags=<true|false>
+                html=<ALL|SAFE|NONE>        determines which html tags can be used in datapack comments
+                desc=<description>          description of the datapack
+                version=<version>           version of the datapack
+                author=<author>             author of the datapack
+                overwrite=<true|false>      whether to overwrite the output file
+                prefixtypes=<true|false>    whether to write macro types as prefixes or suffixes
+                undeftags=<true|false>      whether to allow undefined tags
                 """
             );
         } else {
