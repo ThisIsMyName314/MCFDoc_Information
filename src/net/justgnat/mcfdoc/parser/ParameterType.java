@@ -16,7 +16,7 @@ public class ParameterType {
      * static custom(String) method.
      */
     private ParameterType(String name) {
-        this.colouredName = "<font color=\"#AA00AA\">" + name + "</font>";;
+        this.colouredName = "<span class=\"type\">" + name + "</span>";
     }
 
     public static ParameterType custom(String name) {

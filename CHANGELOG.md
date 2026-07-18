@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- The output document now ships an accessible, dark-by-default theme: rem-based
+  typography that honours the reader's browser font size, body-text contrast of
+  at least 4.5:1 (WCAG AA) in both colour schemes, a visible keyboard focus
+  indicator, a "Skip to content" link, and a `prefers-color-scheme: light`
+  fallback. A print stylesheet renders black-on-white.
+- The generated page now declares `lang`, a UTF-8 `<meta charset>`, and a
+  responsive `<meta name="viewport">`, and wraps its content in a `<main>`
+  landmark.
+
+### Changed
+
+- Deprecated/hidden markers and parameter type names now use CSS classes instead
+  of inline colours and legacy `<font>` tags, so they inherit the theme's
+  contrast in both light and dark schemes.
+
 ## 2.2.0 - 12th July 2026
 
 ### Added
