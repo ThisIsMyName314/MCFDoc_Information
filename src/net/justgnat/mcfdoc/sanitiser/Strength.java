@@ -18,7 +18,7 @@ public enum Strength {
     NONE;
 
     public static Strength parse(String string) {
-        return switch (string) {
+        return switch (string.toUpperCase()) {
             case "NONE" -> TOTAL;
             case "SAFE" -> ALLOW_SAFE;
             case "ALL" -> NONE;

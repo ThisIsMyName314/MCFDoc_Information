@@ -11,17 +11,19 @@ public class Main {
                 """
                 \n
                 Required
-                dir=<datapack path>         the path to the datapack
-                out=<output path>           the path to the output file
+                dir=<datapack path>             the path to the datapack
+                out=<output path>               the path to the output file
 
                 Optional
-                html=<ALL|SAFE|NONE>        determines which html tags can be used in datapack comments
-                desc=<description>          description of the datapack
-                version=<version>           version of the datapack
-                author=<author>             author of the datapack
-                overwrite=<true|false>      whether to overwrite the output file
-                prefixtypes=<true|false>    whether to write macro types as prefixes or suffixes
-                undeftags=<true|false>      whether to allow undefined tags
+                html=<ALL|SAFE|NONE>            determines which html tags can be used in datapack comments
+                desc=<description>              description of the datapack
+                version=<version>               version of the datapack
+                author=<author>                 author of the datapack
+                overwrite=<true|false>          whether to overwrite the output file
+                prefixtypes=<true|false>        whether to write macro types as prefixes or suffixes
+                undeftags=<true|false>          whether to allow undefined tags
+                showhidden=<true|false>         whether to include hidden functions
+                showimpspecheaders=<true|false> whether to include Imp-Spec headers in descriptions
                 """
             );
         } else {
