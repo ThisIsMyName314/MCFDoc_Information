@@ -2,11 +2,11 @@ package net.justgnat.mcfdoc;
 
 public class Main {
 
-    public static final String VERSION = "v2.0";
+    public static final String VERSION = "v2.1.0";
 
     public static void main(String[] args) {
         if (args.length == 0 || args[0].endsWith("help")) {
-            System.out.println(
+            Logger.write(
                 "MCFDOC " + VERSION +
                 """
                 \n
