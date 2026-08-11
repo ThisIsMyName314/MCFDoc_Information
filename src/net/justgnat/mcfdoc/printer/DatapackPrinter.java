@@ -32,22 +32,25 @@ public class DatapackPrinter {
     }
 
     /**
-     * Attempts to print the given Datapack. Does not indicate whether it succeeds or not.
+     * Attempts to print the given Datapack.
+     * @return true only if the printing was successful
      */
-    public static void printDatapack(Datapack datapack, Options options, TypeManager typeManager) {
+    public static boolean printDatapack(Datapack datapack, Options options, TypeManager typeManager) {
         DatapackPrinter printer = new DatapackPrinter(datapack, options, typeManager);
-        printer.print();
+        return printer.print();
     }
 
-    private void print() {
+    private boolean print() {
         if (!checkPath(options.outputPath, options.canOverwrite))
-            return;
+            return false;
 
         try (FileWriter writer = new FileWriter(options.outputPath)) {
             writer.write(generateHtml());
             Logger.write("Wrote to " + options.outputPath);
+            return true;
         } catch (Exception e) {
-            Logger.write("Failed Print: " + e);
+            Logger.error("Failed Print: " + e);
+            return false;
         }
     }
 
@@ -58,9 +61,9 @@ public class DatapackPrinter {
 
         if (!canOverwrite) {
             if (!file.isDirectory()) {
-                Logger.write("File already exists! Use the flag [overwrite=<true|false>] to specify whether overwriting is permitted");
+                Logger.error("File already exists! Use the flag [overwrite=<true|false>] to specify whether overwriting is permitted");
             } else {
-                Logger.write("Can not overwrite a directory");
+                Logger.error("Can not overwrite a directory");
             }
             return false;
         }
@@ -143,7 +146,7 @@ public class DatapackPrinter {
                 sb.append("<tr>");
                 sb.append(td(a("#" + function.name(), function.name())));
                 sb.append(td(sanitise(
-                        getSingleLineDescription(function.description())
+                        getShortenedDescription(function.description())
                 )));
                 sb.append("</tr>");
             }
@@ -151,7 +154,7 @@ public class DatapackPrinter {
         return sb.toString();
     }
 
-    private String getSingleLineDescription(String string) {
+    private String getShortenedDescription(String string) {
         int lineBreak = string.indexOf("<br>");
         if (lineBreak == -1) {
             if (string.length() < 100)

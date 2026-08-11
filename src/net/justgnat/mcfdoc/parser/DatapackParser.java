@@ -139,7 +139,7 @@ public class DatapackParser {
     private void parseFunctionFile(String namespace, File file) {
         String functionName = getFunctionName(file);
         if (!isValidName(functionName)) {
-            Logger.write("Skipping function with invalid name '" + functionName + "'");
+            Logger.warn("Skipping function with invalid name '" + functionName + "'");
             return;
         }
 

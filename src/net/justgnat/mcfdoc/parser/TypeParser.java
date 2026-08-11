@@ -41,7 +41,7 @@ public class TypeParser {
         if (manager.define(type)) {
             Logger.write("Defined new type '" + type.name() + "'");
         } else {
-            Logger.write("Can not define type '" + type.name() + "' because it already exists");
+            Logger.warn("Can not define type '" + type.name() + "' because it already exists");
         }
     }
 

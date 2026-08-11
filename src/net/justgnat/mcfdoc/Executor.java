@@ -20,20 +20,24 @@ public class Executor {
         try {
             return OptionParser.parse(arguments);
         } catch (RuntimeException e) {
-            Logger.write(e.getMessage());
+            Logger.error(e.getMessage());
             return null;
         }
     }
 
-    public void execute() {
+    /**
+     * @return true only if the generation occurred with no errors
+     */
+    public boolean execute() {
         if (options != null) {
             try {
                 Datapack datapack = DatapackParser.parseDatapack(options, typeManager);
-                DatapackPrinter.printDatapack(datapack, options, typeManager);
+                return DatapackPrinter.printDatapack(datapack, options, typeManager);
             } catch (RuntimeException e) {
-                Logger.write(e.getMessage());
+                Logger.error(e.getMessage());
             }
         }
+        return false;
     }
 
 }

@@ -6,18 +6,26 @@ public class Logger {
 
     private final PrintStream stream;
 
-    private static final Logger logger = new Logger(System.out);
+    private static final Logger LOGGER = new Logger(System.out);
 
     private Logger(PrintStream stream) {
         this.stream = stream;
     }
 
-    public static void write(Object object) {
-        logger.log(object);
+    public static void warn(Object o) {
+        LOGGER.log(o);
     }
 
-    public void log(Object object) {
-        stream.println(object);
+    public static void write(Object o) {
+        LOGGER.log(o);
+    }
+
+    public static void error(Object o) {
+        LOGGER.log(o);
+    }
+
+    public void log(Object o) {
+        stream.println(o);
     }
 
 }
