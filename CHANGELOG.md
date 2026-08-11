@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0 - 12th July 2026
+## 2.1.0 - 12th July 2026
 
 ### Added
 
