@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1 - 11th November 2026
+
+### Changed
+
+- `Logger` modified for improved embeddability
+
 ## 2.1.0 - 12th July 2026
 
 ### Added
