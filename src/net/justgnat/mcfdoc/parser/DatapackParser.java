@@ -1,7 +1,7 @@
 package net.justgnat.mcfdoc.parser;
 
 import net.justgnat.mcfdoc.FileUtil;
-import net.justgnat.mcfdoc.Logger;
+import net.justgnat.mcfdoc.helper.Logger;
 import net.justgnat.mcfdoc.Options;
 
 import java.io.File;

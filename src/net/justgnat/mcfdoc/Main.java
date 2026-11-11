@@ -1,5 +1,7 @@
 package net.justgnat.mcfdoc;
 
+import net.justgnat.mcfdoc.helper.Logger;
+
 public class Main {
 
     public static final String VERSION = "v2.1.0";

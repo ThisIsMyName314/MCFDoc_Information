@@ -1,6 +1,6 @@
 package net.justgnat.mcfdoc.printer;
 
-import net.justgnat.mcfdoc.Logger;
+import net.justgnat.mcfdoc.helper.Logger;
 import net.justgnat.mcfdoc.Options;
 import net.justgnat.mcfdoc.parser.*;
 import net.justgnat.mcfdoc.sanitiser.HtmlSanitiser;
